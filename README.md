@@ -1,4 +1,4 @@
-OLX Price Notifier app
+# OLX Price Notifier app
 
 Requirements:
 - docker
