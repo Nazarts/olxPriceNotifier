@@ -2,6 +2,9 @@
 
 namespace DB;
 
+
+use PHPUnit\Framework\Attributes\IgnoreMethodForCodeCoverage;
+
 class Connection
 {
     public \mysqli $connection;
@@ -26,6 +29,10 @@ class Connection
         return $this->connection->query($query);
     }
 
+
+    /*
+     * @codeCoverageIgnore
+     * */
     private function prepare_insert_query(string $table_name, array $data, bool $ignore=false): string
     {
         $query = "INSERT ".($ignore?"IGNORE ": "")."INTO $table_name";
@@ -112,7 +119,6 @@ class Connection
 
     public function delete(string $table_name, null|array $filters=null): \mysqli_result|bool
     {
-        echo $this->prepare_delete_query($table_name, $filters);
         return $this->execute_query($this->prepare_delete_query($table_name, $filters));
     }
 

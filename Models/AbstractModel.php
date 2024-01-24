@@ -19,7 +19,11 @@ abstract class AbstractModel
 
     public function insert(array $data): int|string|null
     {
-        $result = $this->connection->insert($this->table_name, $data);
+        try {
+            $result = $this->connection->insert($this->table_name, $data);
+        } catch (\Exception $exception) {
+            return null;
+        }
         if ($result === true) {
             return $this->connection->last_insert_id();
         }

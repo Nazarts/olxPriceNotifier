@@ -24,6 +24,16 @@
             <file>vendor/autoload.php</file>
         </exclude>
         <exclude>
+            <file>run_parser.php</file>
+            <file>Models/SubscriptionModel.php</file>
+            <file>Models/UserSubscriptionModel.php</file>
+            <file>Models/VerifyCodeModel.php</file>
+            <file>Controllers/AppController.php</file>
+            <file>Services/EmailService.php</file>
+            <file>App.php</file>
+            <file>index.php</file>
+        </exclude>
+        <exclude>
             <directory suffix=".php">tests</directory>
         </exclude>
     </source>

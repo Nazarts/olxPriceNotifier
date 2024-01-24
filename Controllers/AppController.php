@@ -7,7 +7,6 @@ require_once 'Models/UserModel.php';
 require_once 'Models/UserSubscriptionModel.php';
 require_once 'Models/VerifyCodeModel.php';
 require_once 'Services/EmailService.php';
-require_once 'Services/JobService.php';
 require_once 'Services/EmailService.php';
 require_once 'Services/ParsePriceService.php';
 

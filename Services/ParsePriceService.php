@@ -43,6 +43,7 @@ class ParsePriceService
         $url_prices = [];
         // Unchanged price, ignore them
         $unchanged_prices = [];
+        echo json_encode($data);
         foreach ($data as $user) {
             if (array_key_exists($user['url'], $unchanged_prices)) {
                 continue;

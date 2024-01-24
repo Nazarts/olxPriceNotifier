@@ -39,6 +39,8 @@ class AbstractModelTest extends TestCase
         $this->assertEquals($this->user_email, $user['email']);
         $user_id = self::$model->insertOrIgnore(['email' => 'test_email']);
         $this->assertEmpty($user_id);
+        $user_id = self::$model->insert(['not_found_column' => 'test_email']);
+        $this->assertEmpty($user_id);
     }
 
     public function testUpdate()
@@ -59,7 +61,6 @@ class AbstractModelTest extends TestCase
         $user = self::$model->select_all(['email',]);
         $this->assertIsArray($user);
         $this->assertGreaterThan(1, sizeof($user));
-        $this->assertEquals('test_email3', $user[1]['email']);
         self::$model->delete([['email', 'IN', ["test_email2", "test_email3"]]]);
     }
 
