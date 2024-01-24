@@ -112,6 +112,7 @@ class Connection
 
     public function delete(string $table_name, null|array $filters=null): \mysqli_result|bool
     {
+        echo $this->prepare_delete_query($table_name, $filters);
         return $this->execute_query($this->prepare_delete_query($table_name, $filters));
     }
 

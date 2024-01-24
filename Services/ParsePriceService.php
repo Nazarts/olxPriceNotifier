@@ -8,6 +8,7 @@ require_once 'EmailService.php';
 
 use DOMDocument;
 use DOMXPath;
+use Models\SubscriptionModel;
 use Models\UserModel;
 
 class ParsePriceService
@@ -39,19 +40,33 @@ class ParsePriceService
                 'join subscriptions sb on sb.id = usb.subscription_id'
             ]
         );
-        echo json_encode($data);
         $url_prices = [];
+        // Unchanged price, ignore them
+        $unchanged_prices = [];
         foreach ($data as $user) {
-            if (array_key_exists($user['url'], $url_prices)) {
+            if (array_key_exists($user['url'], $unchanged_prices)) {
+                continue;
+            }
+            elseif (array_key_exists($user['url'], $url_prices)) {
                 $price = $url_prices[$user['url']];
             }
             else {
                 $price = self::parsePrice($user['url']);
+                if ($price === $user['price']) {
+                    $unchanged_prices[] = $user['url'];
+                    continue;
+                }
                 $url_prices[$user['url']] = $price;
             }
             if (isset($price)) {
                 \Services\EmailService::sendEmail($user['email'], 'Price parsing', 'Price for url(' . $user['url'] . ') ' . $price);
             }
+        }
+        foreach ($url_prices as $url=>$new_price) {
+            $subscription_model = new SubscriptionModel();
+            $subscription_model->update([
+                'price' => $new_price
+            ], [['url', '=', $url]]);
         }
         return $data;
     }

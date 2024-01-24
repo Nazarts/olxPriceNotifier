@@ -8,9 +8,10 @@ error_reporting(E_ERROR | E_PARSE);
 
 class App
 {
-    static private function initEnvVariables(): bool
+    static public function initEnvVariables(string|null $env_file=null): bool
     {
-        $env_vars = parse_ini_file('.env');
+        $env_file = $env_file??'.env';
+        $env_vars = parse_ini_file($env_file);
         if ($env_vars) {
             foreach ($env_vars as $env_var=>$value) {
                 $_ENV[$env_var] = $value;
